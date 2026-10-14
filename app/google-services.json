@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "703559009380",
+    "project_id": "myresumeapp1-4cc28",
+    "storage_bucket": "myresumeapp1-4cc28.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703559009380:android:9d0243068f6e0ad3548b71",
+        "android_client_info": {
+          "package_name": "com.example.myresumeapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC1tqn_Q7qAgXUO-Roo94N-nXKGckhQV8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
