@@ -15,7 +15,6 @@ import com.example.myresumeapp.ui.theme.MyResumeAppTheme
 import io.github.jan.supabase.storage.storage
 
 class MainActivity : ComponentActivity() {
-    val storage = SupabaseClient.client.storage
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
