@@ -2,6 +2,7 @@ package com.example.myresumeapp.data
 
 import android.R.attr.id
 import android.graphics.Bitmap
+import android.util.Log
 import com.example.myresumeapp.SupabaseClient
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
@@ -45,8 +46,21 @@ class ResumeRepository {
         return updated
     }
     suspend fun fetch(id: String): ResumeData?{
-
+val resumedata = firebaseDatabase.child("users/$userId/resumes/$id").get().await()
+        return resumedata.getValue(ResumeData::class.java)
     }
 
 
+    suspend fun delete(id: String) {
+        firebaseDatabase.child("users/$userId/resumes/$id").removeValue()
+        suspend fun delete(id: String) {
+            firebaseDatabase.child("users/$userId/resumes/$id").removeValue()
+            runCatching {
+                firebaseStorage
+                    .from("uploadss") // your bucket name
+                    .delete("users/$userId/$id/photo.jpg")
+            }.onFailure { Log.e("Delete", "Storage delete failed", it) }
+        }
+    }
+    fkvldfn
     }
