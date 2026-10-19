@@ -42,6 +42,10 @@ class ResumeRepository {
         }
         val updated = resume.copy(id = id, personal = resume.personal.copy(photoUrl = photoUrl))
         firebaseDatabase.child("users/$userId/resumes/$id").setValue(updated).await()
+        return updated
+    }
+    suspend fun fetch(id: String): ResumeData?{
+
     }
 
 
