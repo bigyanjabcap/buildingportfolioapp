@@ -1,5 +1,5 @@
 package com.example.myresumeapp.data
-
+/*
 import android.R.attr.id
 import android.graphics.Bitmap
 import android.util.Log
@@ -62,5 +62,70 @@ val resumedata = firebaseDatabase.child("users/$userId/resumes/$id").get().await
             }.onFailure { Log.e("Delete", "Storage delete failed", it) }
         }
     }
-    fkvldfn
+
     }
+
+ */
+
+
+import android.graphics.Bitmap
+import android.util.Log
+import com.example.myresumeapp.SupabaseClient
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.database
+import io.github.jan.supabase.storage.storage
+import kotlinx.coroutines.tasks.await
+import java.io.ByteArrayOutputStream
+import java.util.UUID
+
+class ResumeRepository {
+    private val firebaseDatabase: DatabaseReference = Firebase.database.reference
+    private val supabaseStorage = SupabaseClient.client.storage
+    private val bucketName = "uploadss"
+    private val userId: String get() = Firebase.auth.currentUser?.uid ?: "guest"
+
+    suspend fun createOrUpdate(resume: ResumeData, localPhotoBitMap: Bitmap?): ResumeData {
+        val id = resume.id.ifEmpty {
+            firebaseDatabase.child("users/$userId/resumes").push().key
+                ?: UUID.randomUUID().toString()
+        }
+        var photoUrl = resume.personal.photoUrl
+
+        if (localPhotoBitMap != null) {
+            val bytes = ByteArrayOutputStream().use { out ->
+                localPhotoBitMap.compress(Bitmap.CompressFormat.JPEG, 92, out)
+                out.toByteArray()
+            }
+            val photoPath = "users/$userId/$id/photo.jpg"
+
+            supabaseStorage.from(bucketName).upload(
+                path = photoPath,
+                data = bytes
+            ) {
+                upsert = true
+            }
+            photoUrl = supabaseStorage.from(bucketName).publicUrl(photoPath)
+        }
+
+        val updated = resume.copy(id = id, personal = resume.personal.copy(photoUrl = photoUrl))
+        firebaseDatabase.child("users/$userId/resumes/$id").setValue(updated).await()
+        return updated
+    }
+
+    suspend fun fetch(id: String): ResumeData? {
+        val snapshot = firebaseDatabase.child("users/$userId/resumes/$id").get().await()
+        return snapshot.getValue(ResumeData::class.java)
+    }
+
+    suspend fun delete(id: String) {
+        firebaseDatabase.child("users/$userId/resumes/$id").removeValue().await()
+
+        runCatching {
+            supabaseStorage
+                .from(bucketName)
+                .delete("users/$userId/$id/photo.jpg")
+        }.onFailure { Log.e("Delete", "Storage delete failed", it) }
+    }
+}
