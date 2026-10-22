@@ -42,7 +42,17 @@ internalUiState.value = internalUiState.value.copy(localPhotoUri = uri)
 
 // thiis convert uri into pixelsssss picturee
 
-    fun updatePersonal(){
+    fun updatePersonal(name: String?,email: String?,phone:String?,location: String?){
+        val currentResume = internalUiState.value.resume
+        internalUiState.value.copy(
+            resume = currentResume.copy(
+                personal = currentResume.personal.copy(name = name?:currentResume.personal.name,
+email = email?:currentResume.personal.email, phone = phone?:currentResume.personal.phone, location = location?:currentResume.personal.location
+                    )
+            )
+        )
+    }
+    fun updateQualification(){
 
     }
 }
