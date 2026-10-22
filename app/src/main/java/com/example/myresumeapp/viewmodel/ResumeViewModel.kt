@@ -41,4 +41,8 @@ internalUiState.value = internalUiState.value.copy(localPhotoUri = uri)
     }
 
 // thiis convert uri into pixelsssss picturee
+
+    fun updatePersonal(){
+
+    }
 }
