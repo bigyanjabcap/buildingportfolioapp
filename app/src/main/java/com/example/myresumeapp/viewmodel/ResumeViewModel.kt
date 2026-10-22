@@ -13,6 +13,7 @@ import com.example.myresumeapp.data.UiState
 import com.example.myresumeapp.utils.toSoftwareBitmap
 import io.ktor.http.ContentType
 import okhttp3.Response
+import kotlin.String
 
 class ResumeViewModel(app: Application) : AndroidViewModel(app){
 private val resumeRepository = ResumeRepository()
@@ -44,7 +45,7 @@ internalUiState.value = internalUiState.value.copy(localPhotoUri = uri)
 
     fun updatePersonal(name: String?,email: String?,phone:String?,location: String?){
         val currentResume = internalUiState.value.resume
-        internalUiState.value.copy(
+        internalUiState.value=internalUiState.value.copy(
             resume = currentResume.copy(
                 personal = currentResume.personal.copy(name = name?:currentResume.personal.name,
 email = email?:currentResume.personal.email, phone = phone?:currentResume.personal.phone, location = location?:currentResume.personal.location
@@ -52,7 +53,38 @@ email = email?:currentResume.personal.email, phone = phone?:currentResume.person
             )
         )
     }
-    fun updateQualification(){
+    fun updateQualification(degree: String?,institution:String?,startYear:String?,endYear:String?,skills:String?){
+val currentResume=internalUiState.value.resume
+        internalUiState.value=internalUiState.value.copy(
+            resume = currentResume.copy(
+qualificationSkills = currentResume.qualificationSkills.copy(
+    degree = degree?:currentResume.qualificationSkills.degree,institution=institution?:currentResume.qualificationSkills.institution,
+    startYear=startYear?:currentResume.qualificationSkills.startYear,
+    endYear=endYear?:currentResume.qualificationSkills.endYear,
+    skills = skills?:currentResume.qualificationSkills.skills
+)
+            )
+        )
 
     }
-}
+    fun updateExperience(
+     responsibilities: String?,
+     experienceYears: String?,
+     company: String?,
+     role: String?){
+
+val currentResume = internalUiState.value.resume
+        internalUiState.value = internalUiState.value.copy(
+            resume = currentResume.copy(
+                experience = currentResume.experience.copy(
+                    responsibilities = responsibilities?:currentResume.experience.responsibilities,
+                    company = company?:currentResume.experience.company,
+                    role = role?:currentResume.experience.role,
+                    experienceYears = experienceYears?:currentResume.experience.experienceYears,
+                    )
+            )
+        )
+    }
+
+
+    }
