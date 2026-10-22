@@ -8,10 +8,14 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.myresumeapp.data.ResumeRepository
 import com.example.myresumeapp.data.UiState
 import com.example.myresumeapp.utils.toSoftwareBitmap
 import io.ktor.http.ContentType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.Response
 import kotlin.String
 
@@ -84,6 +88,35 @@ val currentResume = internalUiState.value.resume
                     )
             )
         )
+    }
+    fun delete(onDone:()-> Unit){
+val id= internalUiState.value.resume.id
+        viewModelScope.launch {
+internalUiState.value = internalUiState.value.copy(isSaving = true, message = null)
+            runCatching {
+                if (id.isNotEmpty()) resumeRepository.delete(id)
+internalUiState.value= UiState()
+                onDone()
+            }.onFailure {
+                internalUiState.value = internalUiState.value.copy(isSaving = false, message = "Delete failed ${it.message}")
+            }
+
+
+        }
+    }
+    fun saveToFirebase(){
+        viewModelScope.launch {
+            internalUiState.value  = internalUiState.value.copy(isSaving = true, message = null)
+            val bitmap = withContext(Dispatchers.IO){localBitMapOrNull()}
+            runCatching {
+                resumeRepository.createOrUpdate(internalUiState.value.resume,bitmap)
+            }.onSuccess { saved->
+                internalUiState.value=internalUiState.value.copy(isSaving = false, resume = saved, message = "saved")
+            }.onFailure {
+                internalUiState.value = internalUiState.value.copy(isSaving = false, message = "Save message ${it.message} ")
+            }
+
+        }
     }
 
 
