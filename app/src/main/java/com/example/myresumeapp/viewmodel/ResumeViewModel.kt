@@ -118,6 +118,26 @@ internalUiState.value= UiState()
 
         }
     }
+    fun downloadPDF(uri:Uri?){
+        if(uri==null) return
+        viewModelScope.launch(Dispatchers.IO){
+            runCatching {
+                val bitmap = localBitMapOrNull()
+                val  appContext = getApplication<Application>()
+                //generate  resumw pdf
+            }.onSuccess {
+                withContext(Dispatchers.Main){
+                    internalUiState.value=internalUiState.value.copy(message = "saved")
+                }
+            }.onFailure {
+                withContext(Dispatchers.Main){
+internalUiState.value=internalUiState.value.copy(message = "PDF saved failed ${it.message}")
+                }
+            }
+
+        }
+
+    }
 
 
     }
