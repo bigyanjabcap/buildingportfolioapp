@@ -1,5 +1,31 @@
 package com.example.myresumeapp.navigation
 
-class NavRoutes {
+import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHost
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.example.myresumeapp.uiscreens.PersonalScreen
+import com.example.myresumeapp.viewmodel.ResumeViewModel
 
+
+object Routes {
+    const val  PESRONAL = "personal"
+    const val QUALIFICATION = "qualification"
+    const val EXPERIENCE = "experience"
+    const val PREVIEW = "preview"
+
+}
+
+@Composable
+fun AppNavigation(navController: NavHostController= rememberNavController()){
+val resumeViewModel: ResumeViewModel= viewModel()
+    NavHost(navController, startDestination = Routes.PESRONAL){
+composable(Routes.PESRONAL){
+    PersonalScreen()
+}
+    }
 }

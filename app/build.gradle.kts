@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.navigation.runtime.ktx)
     implementation(libs.firebase.database)
     // Supabase BOM
     implementation(platform("io.github.jan-tennert.supabase:bom:3.5.0"))
@@ -69,6 +70,7 @@ dependencies {
 
         // Coil for image loading
         implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation("androidx.navigation:navigation-compose:2.8.5")
 
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))
