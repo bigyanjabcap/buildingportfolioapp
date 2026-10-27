@@ -5,7 +5,7 @@ import com.example.myresumeapp.data.UiState
 
 
 @Composable
-fun QualificationScreen(uiState: UiState,onNext:()->Unit,onPhotoPicked:()->Unit,
+fun QualificationScreen(uiState: UiState,onNext:()->Unit,onPrev:()->Unit,
                         onFieldChange:(degree: String?,institution: String?,startYear: String?,endYear: String?,skills: String)-> Unit){
 
 

@@ -6,6 +6,6 @@ import com.example.myresumeapp.data.UiState
 
 
 @Composable
-fun PersonalScreen(uiState: UiState,onNext:()-> Unit,onPhotoPicked:(Uri?)-> Unit,onFieldChanged:(String?, String?, String?)-> Unit){
+fun PersonalScreen(uiState: UiState,onNext:()-> Unit,onPhotoPicked:(Uri?)-> Unit,onFieldChanged:(String?, String?, String?, String?)-> Unit){
 
 }

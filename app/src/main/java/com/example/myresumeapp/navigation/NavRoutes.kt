@@ -8,7 +8,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.myresumeapp.uiscreens.ExperienceScreen
 import com.example.myresumeapp.uiscreens.PersonalScreen
+import com.example.myresumeapp.uiscreens.PreviewScreen
+import com.example.myresumeapp.uiscreens.QualificationScreen
 import com.example.myresumeapp.viewmodel.ResumeViewModel
 
 
@@ -21,11 +24,40 @@ object Routes {
 }
 
 @Composable
-fun AppNavigation(navController: NavHostController= rememberNavController()){
-val resumeViewModel: ResumeViewModel= viewModel()
-    NavHost(navController, startDestination = Routes.PESRONAL){
-composable(Routes.PESRONAL){
-    PersonalScreen()
-}
+fun AppNavigation(navController: NavHostController= rememberNavController()) {
+    val resumeViewModel: ResumeViewModel = viewModel()
+    NavHost(navController, startDestination = Routes.PESRONAL) {
+        composable(Routes.PESRONAL) {
+            PersonalScreen(
+                uiState = resumeViewModel.uiState,
+                onNext = { navController.navigate(Routes.QUALIFICATION) },
+                onPhotoPicked = resumeViewModel::setPghoto,
+                onFieldChanged = resumeViewModel::updatePersonal
+            )
+        }
+        composable(Routes.QUALIFICATION) {
+            QualificationScreen(
+                uiState = resumeViewModel.uiState,
+                onNext = { navController.navigate(Routes.EXPERIENCE) },
+                onPrev = { navController.popBackStack() },
+                onFieldChange = resumeViewModel::updateQualification
+            )
+
+        }
+        composable(Routes.EXPERIENCE) {
+            ExperienceScreen(
+                uiState = resumeViewModel.uiState,
+                onPrev = { navController.popBackStack() },
+                onNext = { navController.navigate(Routes.PREVIEW) },
+                onFielChange = resumeViewModel::updateExperience
+            )
+
+        }
+        composable(Routes.PREVIEW) {
+
+
+            }
+        }
+
+
     }
-}
