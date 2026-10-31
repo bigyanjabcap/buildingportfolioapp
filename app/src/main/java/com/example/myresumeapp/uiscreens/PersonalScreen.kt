@@ -8,14 +8,17 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -55,7 +58,34 @@ fun PersonalScreen(uiState: UiState,onNext:()-> Unit,onPhotoPicked:(Uri?)-> Unit
 
                 }
             }
-        }
+        Spacer(Modifier.height(12.dp))
+        OutlinedTextField(value = uiState.resume.personal.name,
+            onValueChange = {onFieldChanged(it,null,null,null)}, label = {Text("Name")},
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp)
+            )
+
+        OutlinedTextField(value = uiState.resume.personal.location,
+            onValueChange = {onFieldChanged(null,null,null,it)}, label = {Text("Location")},
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp)
+        )
+        OutlinedTextField(value = uiState.resume.personal.email,
+            onValueChange = {onFieldChanged(null,it,null,null)}, label = {Text("Email")},
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp)
+        )
+        OutlinedTextField(value = uiState.resume.personal.phone,
+            onValueChange = {onFieldChanged(null,null,it,null)}, label = {Text("Phone")},
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp))
+
+
 
     }
+
+        }
+
+
+
 
