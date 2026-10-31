@@ -55,9 +55,22 @@ fun AppNavigation(navController: NavHostController= rememberNavController()) {
         }
         composable(Routes.PREVIEW) {
 
+            PreviewScreen(
+                uiState = resumeViewModel.uiState,
+                onEdit = { navController.popBackStack(Routes.PESRONAL, inclusive = false) },
+                onDelete = {
+                    resumeViewModel.delete {
+                        navController.popBackStack(Routes.PESRONAL, inclusive = false)
+                        navController.navigate(Routes.PESRONAL)
+                    }
+                },
+                onSaveDataBase = resumeViewModel::saveToFirebase,
+                onDownloadPdf = resumeViewModel::downloadPDF
+            )
 
-            }
+
         }
+    }
 
 
     }
