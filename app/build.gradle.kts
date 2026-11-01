@@ -71,6 +71,13 @@ dependencies {
         // Coil for image loading
         implementation("io.coil-kt:coil-compose:2.7.0")
     implementation("androidx.navigation:navigation-compose:2.8.5")
+    implementation("io.ktor:ktor-client-okhttp:3.5.1")
+    implementation(platform("io.github.jan-tennert.supabase:bom:3.8.0"))
+    implementation("io.github.jan-tennert.supabase:postgrest-kt")  // database
+    implementation("io.github.jan-tennert.supabase:auth-kt")       // login (was gotrue-kt before 3.0)
+    implementation("io.github.jan-tennert.supabase:storage-kt")    // file uploads, if needed
+    implementation("io.github.jan-tennert.supabase:realtime-kt")   // live updates, if needed
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.12.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(platform(libs.androidx.compose.bom))

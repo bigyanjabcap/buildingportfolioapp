@@ -33,58 +33,97 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.myresumeapp.R
 import com.example.myresumeapp.data.UiState
+import androidx.compose.ui.tooling.preview.Preview
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PersonalScreen(uiState: UiState,onNext:()-> Unit,onPhotoPicked:(Uri?)-> Unit,onFieldChanged:(String?, String?, String?, String?)-> Unit){
+fun PersonalScreen(uiState: UiState,onNext:()-> Unit,onPhotoPicked:(Uri?)-> Unit,onFieldChanged:(String?, String?, String?, String?)-> Unit) {
 
-    val photpicked = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-        onPhotoPicked(uri)
-    }
-    Scaffold(topBar ={TopAppBar(title = { Text("My resume", color = Color.White) }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Blue))}) { paddingValues ->
-        Column(Modifier.padding(paddingValues).padding(16.dp), verticalArrangement = Arrangement.spacedBy(16.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+    val photpicked =
+        rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+            onPhotoPicked(uri)
+        }
+    Scaffold(topBar = {
+        TopAppBar(
+            title = { Text("My resume", color = Color.White) },
+            colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Blue)
+        )
+    }) { paddingValues ->
+        Column(
+            Modifier.padding(paddingValues).padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Text(text = "Personal Details", style = MaterialTheme.typography.headlineSmall)
             Spacer(Modifier.height(6.dp))
-            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                AsyncImage(model = uiState.localPhotoUri ?:R.drawable.outline_animated_images_24, contentDescription = "Selected Photo",
-                    modifier = Modifier.size(96.dp).clip(CircleShape))
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                AsyncImage(
+                    model = uiState.localPhotoUri ?: R.drawable.outline_animated_images_24,
+                    contentDescription = "Selected Photo",
+                    modifier = Modifier.size(96.dp).clip(CircleShape)
+                )
 
-                Button(onClick = {photpicked.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))}, colors = ButtonDefaults.buttonColors(
-                    Color.Blue)) {
-            Text(if (uiState.localPhotoUri==null) "Select Photo" else "Change Photo")
+                Button(
+                    onClick = { photpicked.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)) },
+                    colors = ButtonDefaults.buttonColors(
+                        Color.Blue
+                    )
+                ) {
+                    Text(if (uiState.localPhotoUri == null) "Select Photo" else "Change Photo")
                 }
-            //this launches the photo gallery {
+                //this launches the photo gallery {
 
-                }
             }
+        }
         Spacer(Modifier.height(12.dp))
-        OutlinedTextField(value = uiState.resume.personal.name,
-            onValueChange = {onFieldChanged(it,null,null,null)}, label = {Text("Name")},
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
-            )
-
-        OutlinedTextField(value = uiState.resume.personal.location,
-            onValueChange = {onFieldChanged(null,null,null,it)}, label = {Text("Location")},
+        OutlinedTextField(
+            value = uiState.resume.personal.name,
+            onValueChange = { onFieldChanged(it, null, null, null) }, label = { Text("Name") },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp)
         )
-        OutlinedTextField(value = uiState.resume.personal.email,
-            onValueChange = {onFieldChanged(null,it,null,null)}, label = {Text("Email")},
+
+        OutlinedTextField(
+            value = uiState.resume.personal.location,
+            onValueChange = { onFieldChanged(null, null, null, it) }, label = { Text("Location") },
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp)
         )
-        OutlinedTextField(value = uiState.resume.personal.phone,
-            onValueChange = {onFieldChanged(null,null,it,null)}, label = {Text("Phone")},
+        OutlinedTextField(
+            value = uiState.resume.personal.email,
+            onValueChange = { onFieldChanged(null, it, null, null) }, label = { Text("Email") },
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp))
-
+            shape = RoundedCornerShape(16.dp)
+        )
+        OutlinedTextField(
+            value = uiState.resume.personal.phone,
+            onValueChange = { onFieldChanged(null, null, it, null) }, label = { Text("Phone") },
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(16.dp)
+        )
 
 
     }
 
-        }
+}
+
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PersonalScreenPreview() {
+    MaterialTheme {
+        PersonalScreen(
+            uiState = UiState(), // see note below
+            onNext = {},
+            onPhotoPicked = {},
+            onFieldChanged = { _, _, _, _ -> }
+        )
+    }
+}
 
 
 
