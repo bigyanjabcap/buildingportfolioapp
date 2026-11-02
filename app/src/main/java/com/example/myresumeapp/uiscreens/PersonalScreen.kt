@@ -7,11 +7,13 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -78,35 +80,44 @@ fun PersonalScreen(uiState: UiState,onNext:()-> Unit,onPhotoPicked:(Uri?)-> Unit
                 //this launches the photo gallery {
 
             }
+
+            Spacer(Modifier.height(12.dp))
+            OutlinedTextField(
+                value = uiState.resume.personal.name,
+                onValueChange = { onFieldChanged(it, null, null, null) }, label = { Text("Name") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp)
+            )
+
+            OutlinedTextField(
+                value = uiState.resume.personal.location,
+                onValueChange = { onFieldChanged(null, null, null, it) },
+                label = { Text("Location") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp)
+            )
+            OutlinedTextField(
+                value = uiState.resume.personal.email,
+                onValueChange = { onFieldChanged(null, it, null, null) }, label = { Text("Email") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp)
+            )
+            OutlinedTextField(
+                value = uiState.resume.personal.phone,
+                onValueChange = { onFieldChanged(null, null, it, null) }, label = { Text("Phone") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp)
+            )
+            Spacer(Modifier.height(12.dp))
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End){
+Button(onClick = onNext, colors = ButtonDefaults.buttonColors(Color.Blue),
+    enabled = uiState.resume.personal.name.isNotEmpty() && uiState.resume.personal.email.isNotEmpty()) {
+    Text("Next")
+
+}
+            }
+
         }
-        Spacer(Modifier.height(12.dp))
-        OutlinedTextField(
-            value = uiState.resume.personal.name,
-            onValueChange = { onFieldChanged(it, null, null, null) }, label = { Text("Name") },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
-        )
-
-        OutlinedTextField(
-            value = uiState.resume.personal.location,
-            onValueChange = { onFieldChanged(null, null, null, it) }, label = { Text("Location") },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
-        )
-        OutlinedTextField(
-            value = uiState.resume.personal.email,
-            onValueChange = { onFieldChanged(null, it, null, null) }, label = { Text("Email") },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
-        )
-        OutlinedTextField(
-            value = uiState.resume.personal.phone,
-            onValueChange = { onFieldChanged(null, null, it, null) }, label = { Text("Phone") },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(16.dp)
-        )
-
-
     }
 
 }
