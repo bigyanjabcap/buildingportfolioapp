@@ -15,5 +15,9 @@ fun  ResumeCard(resume: ResumeData,modifier: Modifier = Modifier){
     Card(modifier = modifier, shape = MaterialTheme.shapes.large, elevation = CardDefaults.cardElevation(8.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)) {
 
+
+
+
+
     }
 }
