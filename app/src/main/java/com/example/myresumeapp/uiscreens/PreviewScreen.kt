@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.unit.dp
+import com.example.myresumeapp.components.ResumeCard
 import com.example.myresumeapp.data.UiState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,7 +57,7 @@ Text("Resume Preview", style = MaterialTheme.typography.headlineMedium)
             Spacer(Modifier.height(6.dp))
 
             //Resume Card
-
+            ResumeCard(resume = uiState.resume, modifier = Modifier.weight(1f))
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
                 androidx.compose.material3.Button(onClick = onSaveDataBase, enabled = !uiState.isSaving, colors = ButtonDefaults.buttonColors(Color.Blue)){
                     Text(if (uiState.isSaving) "Saving..." else "Save to database", color = Color.White)
