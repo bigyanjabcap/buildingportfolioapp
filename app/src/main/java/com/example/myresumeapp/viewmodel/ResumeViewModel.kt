@@ -11,6 +11,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myresumeapp.data.ResumeRepository
 import com.example.myresumeapp.data.UiState
+import com.example.myresumeapp.utils.generateResumePDFToUri
 import com.example.myresumeapp.utils.toSoftwareBitmap
 import io.ktor.http.ContentType
 import kotlinx.coroutines.Dispatchers
@@ -82,9 +83,9 @@ val currentResume = internalUiState.value.resume
             resume = currentResume.copy(
                 experience = currentResume.experience.copy(
                     responsibilities = responsibilities?:currentResume.experience.responsibilities,
+                    experienceYears = experienceYears?:currentResume.experience.experienceYears,
                     company = company?:currentResume.experience.company,
                     role = role?:currentResume.experience.role,
-                    experienceYears = experienceYears?:currentResume.experience.experienceYears,
                     )
             )
         )
@@ -125,6 +126,7 @@ internalUiState.value= UiState()
                 val bitmap = localBitMapOrNull()
                 val  appContext = getApplication<Application>()
                 //generate  resumw pdf
+                generateResumePDFToUri(appContext,internalUiState.value.resume,bitmap,uri)
             }.onSuccess {
                 withContext(Dispatchers.Main){
                     internalUiState.value=internalUiState.value.copy(message = "saved")

@@ -49,7 +49,7 @@ fun AppNavigation(navController: NavHostController= rememberNavController()) {
                 uiState = resumeViewModel.uiState,
                 onPrev = { navController.popBackStack() },
                 onNext = { navController.navigate(Routes.PREVIEW) },
-                onFielChange = resumeViewModel::updateExperience
+                onFieldChange = resumeViewModel::updateExperience
             )
 
         }
