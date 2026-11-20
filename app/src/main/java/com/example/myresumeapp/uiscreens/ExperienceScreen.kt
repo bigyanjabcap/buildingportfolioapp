@@ -49,7 +49,10 @@ import java.math.RoundingMode
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExperienceScreen(uiState: UiState,onNext:()->Unit,onPrev:()->Unit,
-                        onFieldChange:(company: String?,role: String?,experienceYears: String?,responsibilities: String?)-> Unit){
+                        onFieldChange:(responsibilities: String?,
+                                       experienceYears: String?,
+                                       company: String?,
+                                       role: String?)-> Unit){
 
     Scaffold(topBar = {
         CenterAlignedTopAppBar(title = { Text("MyResume", color = Color.White) }, colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Blue)
@@ -67,26 +70,13 @@ fun ExperienceScreen(uiState: UiState,onNext:()->Unit,onPrev:()->Unit,
 
 
             OutlinedTextField(
-                value = uiState.resume.experience.company, onValueChange = {
+                value = uiState.resume.experience.responsibilities, onValueChange = {
                     onFieldChange(
                         it,
                         null, null, null
                     )
-                }, label = { Text("Ccompany name") },
+                }, label = { Text("Responsibilities") },
                 modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp)
-            )
-
-            OutlinedTextField(
-                value = uiState.resume.experience.role,
-                onValueChange = {
-                    onFieldChange(
-                        null,
-                        it, null, null
-                    )
-                },
-                label = { Text("Role") },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp)
             )
 
             OutlinedTextField(
@@ -94,18 +84,31 @@ fun ExperienceScreen(uiState: UiState,onNext:()->Unit,onPrev:()->Unit,
                 onValueChange = {
                     onFieldChange(
                         null,
-                        null, it, null,
+                        it, null, null
                     )
                 },
-                label = { Text("Years of Expereience") },
+                label = { Text("Experience Years") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp)
             )
 
             OutlinedTextField(
-                value = uiState.resume.experience.responsibilities,
+                value = uiState.resume.experience.company,
+                onValueChange = {
+                    onFieldChange(
+                        null,
+                        null, it, null,
+                    )
+                },
+                label = { Text("Company name") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp)
+            )
+
+            OutlinedTextField(
+                value = uiState.resume.experience.role,
                 onValueChange = { onFieldChange(null, null, null, it) },
-                label = { Text("Responsibilities") },
+                label = { Text("Role") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp)
             )
