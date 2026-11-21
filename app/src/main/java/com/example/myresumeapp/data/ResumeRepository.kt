@@ -77,20 +77,24 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.database
 import io.github.jan.supabase.storage.storage
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.time.withTimeout
 import java.io.ByteArrayOutputStream
 import java.util.UUID
 
 class ResumeRepository {
-    private val firebaseDatabase: DatabaseReference = Firebase.database.reference
+    private val firebaseDatabase: DatabaseReference = Firebase.database("https://myresumeapp1-4cc28-default-rtdb.firebaseio.com/").reference
     private val supabaseStorage = SupabaseClient.client.storage
     private val bucketName = "uploadss"
     private val userId: String get() = Firebase.auth.currentUser?.uid ?: "guest"
 
     suspend fun createOrUpdate(resume: ResumeData, localPhotoBitMap: Bitmap?): ResumeData {
+        Log.d("SAVE", "1. createOrUpdate started, userId=$userId")
+
         val id = resume.id.ifEmpty {
             firebaseDatabase.child("users/$userId/resumes").push().key
                 ?: UUID.randomUUID().toString()
         }
+        Log.d("SAVE", "2. resume id=$id")
         var photoUrl = resume.personal.photoUrl
 
         if (localPhotoBitMap != null) {
@@ -107,10 +111,18 @@ class ResumeRepository {
                 upsert = true
             }
             photoUrl = supabaseStorage.from(bucketName).publicUrl(photoPath)
+            Log.d("SAVE", "3. Supabase upload done, url=$photoUrl")
+        }
+        else{
+            Log.d("SAVE", "3. No photo to upload")
+
         }
 
         val updated = resume.copy(id = id, personal = resume.personal.copy(photoUrl = photoUrl))
-        firebaseDatabase.child("users/$userId/resumes/$id").setValue(updated).await()
+        Log.d("SAVE", "4. Writing to RTDB: users/$userId/resumes/$id  data=$updated")
+        withTimeout(10_000) {
+            firebaseDatabase.child("users/$userId/resumes/$id").setValue(updated).await()
+        }
         return updated
     }
 
