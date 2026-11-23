@@ -6,6 +6,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -107,13 +108,17 @@ internalUiState.value= UiState()
     }
     fun saveToFirebase(){
         viewModelScope.launch {
+            Log.d("SAVE", "saveToFirebase clicked")
             internalUiState.value  = internalUiState.value.copy(isSaving = true, message = null)
             val bitmap = withContext(Dispatchers.IO){localBitMapOrNull()}
+            Log.d("SAVE", "bitmap is ${if (bitmap == null) "NULL" else "ready"}")
             runCatching {
                 resumeRepository.createOrUpdate(internalUiState.value.resume,bitmap)
             }.onSuccess { saved->
+                Log.d("SAVE", "ViewModel: success")
                 internalUiState.value=internalUiState.value.copy(isSaving = false, resume = saved, message = "saved")
             }.onFailure {
+                Log.e("SAVE", "ViewModel: FAILED", it)
                 internalUiState.value = internalUiState.value.copy(isSaving = false, message = "Save message ${it.message} ")
             }
 

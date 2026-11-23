@@ -40,7 +40,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PersonalScreen(uiState: UiState,onNext:()-> Unit,onPhotoPicked:(Uri?)-> Unit,onFieldChanged:(String?, String?, String?, String?)-> Unit) {
+fun PersonalScreen(uiState: UiState,onNext:()-> Unit,onPhotoPicked:(Uri?)-> Unit,onFieldChanged:(String?, String?, String?, String?, String?)-> Unit) {
 
     val photpicked =
         rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -91,23 +91,31 @@ fun PersonalScreen(uiState: UiState,onNext:()-> Unit,onPhotoPicked:(Uri?)-> Unit
 
             OutlinedTextField(
                 value = uiState.resume.personal.location,
-                onValueChange = { onFieldChanged(null, null, null, it) },
+                onValueChange = { onFieldChanged(null, null, null, it,null) },
                 label = { Text("Location") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp)
             )
             OutlinedTextField(
                 value = uiState.resume.personal.email,
-                onValueChange = { onFieldChanged(null, it, null, null) }, label = { Text("Email") },
+                onValueChange = { onFieldChanged(null, it, null, null,null) }, label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp)
             )
             OutlinedTextField(
                 value = uiState.resume.personal.phone,
-                onValueChange = { onFieldChanged(null, null, it, null) }, label = { Text("Phone") },
+                onValueChange = { onFieldChanged(null, null, it, null,null) }, label = { Text("Phone") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp)
             )
+
+            OutlinedTextField(
+                value = uiState.resume.personal.phone2,
+                onValueChange = { onFieldChanged(null, null, null, null,it) }, label = { Text("Phone2") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp)
+            )
+
             Spacer(Modifier.height(12.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End){
 Button(onClick = onNext, colors = ButtonDefaults.buttonColors(Color.Blue),

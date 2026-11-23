@@ -5,6 +5,7 @@ import android.net.Uri
 data class PersonalDetails(val name: String="",
                            val email: String="",
                            val phone: String="",
+                           val phone2:String="",
                            val location: String="",
                            val photoUrl: String="")
 
