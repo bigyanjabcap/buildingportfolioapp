@@ -39,6 +39,8 @@ fun  ResumeCard(resume: ResumeData,modifier: Modifier = Modifier){
                   Text(resume.personal.name, style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.Bold)
 Text(resume.personal.email,style = MaterialTheme.typography.bodyMedium)
                   Text(resume.personal.phone,style = MaterialTheme.typography.bodyMedium)
+                  Text(resume.personal.phone2,style = MaterialTheme.typography.bodyMedium)
+
                   Text(resume.personal.location,style = MaterialTheme.typography.bodyMedium)
               }
               }

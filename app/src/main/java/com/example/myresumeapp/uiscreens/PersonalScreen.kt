@@ -1,7 +1,6 @@
 package com.example.myresumeapp.uiscreens
 
 import android.net.Uri
-import android.provider.CalendarContract
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
@@ -24,7 +22,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -84,27 +81,27 @@ fun PersonalScreen(uiState: UiState,onNext:()-> Unit,onPhotoPicked:(Uri?)-> Unit
             Spacer(Modifier.height(12.dp))
             OutlinedTextField(
                 value = uiState.resume.personal.name,
-                onValueChange = { onFieldChanged(it, null, null, null) }, label = { Text("Name") },
+                onValueChange = { onFieldChanged(it, null, null, null,null) }, label = { Text("Name") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp)
             )
 
             OutlinedTextField(
                 value = uiState.resume.personal.location,
-                onValueChange = { onFieldChanged(null, null, null, it,null) },
+                onValueChange = { onFieldChanged(null, it, null, null,null) },
                 label = { Text("Location") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp)
             )
             OutlinedTextField(
                 value = uiState.resume.personal.email,
-                onValueChange = { onFieldChanged(null, it, null, null,null) }, label = { Text("Email") },
+                onValueChange = { onFieldChanged(null, null, it, null,null) }, label = { Text("Email") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp)
             )
             OutlinedTextField(
                 value = uiState.resume.personal.phone,
-                onValueChange = { onFieldChanged(null, null, it, null,null) }, label = { Text("Phone") },
+                onValueChange = { onFieldChanged(null, null, null, it,null) }, label = { Text("Phone") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp)
             )
@@ -139,7 +136,8 @@ fun PersonalScreenPreview() {
             uiState = UiState(), // see note below
             onNext = {},
             onPhotoPicked = {},
-            onFieldChanged = { _, _, _, _ -> }
+            onFieldChanged = { string, string1, string2, string3, string4
+                -> }
         )
     }
 }

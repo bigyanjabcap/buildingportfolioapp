@@ -36,6 +36,7 @@ var y = 40f /// for phtootoo
     y+=44f
     canvas.drawText(resume.personal.email,40f,y,textPaint); y+=18f
     canvas.drawText(resume.personal.phone,40f,y,textPaint); y+=18f
+    canvas.drawText(resume.personal.phone2,40f,y,textPaint); y+=18f
     canvas.drawText(resume.personal.location,40f,y,textPaint); y+=18f
 
 
